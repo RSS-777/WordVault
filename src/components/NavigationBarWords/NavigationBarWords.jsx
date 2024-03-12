@@ -14,7 +14,6 @@ export const NavigationBarWords = () => {
             if (!isNavClicked) {
                 setClose(false);
             }
-            console.log(event.target)
         };
 
         document.addEventListener('click', handleClickOutside);

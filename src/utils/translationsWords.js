@@ -1,4 +1,4 @@
-export const translations = [
+const translationsWords = [
     { abandon: "покинути" },
     { ability: "здібність" },
     { able: "здатний" },
@@ -3234,3 +3234,12 @@ export const translations = [
     { zucchini: "цукіні" },
     { zygote: "зигота" }
 ];
+
+export const groupedWords = translationsWords.reduce((acc, items) => {
+    const firstWord = Object.keys(items)[0][0].toUpperCase();
+    if (!acc[firstWord]) {
+        acc[firstWord] = []
+    }
+    acc[firstWord].push(items)
+    return acc
+}, {});
