@@ -49,6 +49,7 @@ export const BlockWordsStyle = styled.ol`
   background-color: ${props => props.theme.background};
   border-radius: 20px;
   box-shadow: 2px 2px 8px 1px #000;
+  user-select: none;
 
   li {
     border: 1px solid #FF9D00;
@@ -63,13 +64,62 @@ export const BlockWordsStyle = styled.ol`
       color: ${props => props.theme.primary};
     }
 
-    span:last-child {
+    span:nth-child(2) {
+      color: ${props => props.theme.primary};
+    }
+
+    span:nth-child(3) {
       color: ${props => props.theme.secondary};
+    }
+
+    >div {
+      font-size: 12px;
+      color: ${props => props.theme.text};
+      padding-left: 8px;
+
+      button {
+        font-size: 12px;
+        background-color: ${props => props.theme.backgroundButton};
+        box-shadow: ${props => props.theme.boxShadowButton};
+        border: 1px solid red;
+        border-radius: 8px;
+        color: ${props => props.theme.text};
+        margin-left: 5px;
+        margin-bottom: 5px;
+
+        &:hover {
+          box-shadow: none;
+          border: 1px solid white;
+         }
+      }
     }
 
     &:hover {
       border: 1px solid red;
       box-shadow: ${props => props.theme.boxShadowButton};
+    }
+
+    &:active {
+      background-color: #FFD9E1;
+    }
+  }
+
+  .selected-item {
+    border: 1px solid #FF9D00;
+    background-color:  ${props => props.theme.inactiveBackground};
+    cursor: not-allowed;
+    pointer-events: none;
+
+    span:first-child {
+      color: ${props => props.theme.inactiveTextPrimary};
+    }
+
+    span:nth-child(2) {
+      color: ${props => props.theme.inactiveTextSecondary};
+    }
+
+    span:nth-child(3){
+      color: ${props => props.theme.inactiveTextThird};
     }
   }
 `;
