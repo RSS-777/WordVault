@@ -7,8 +7,8 @@ const Dictionary = () => {
     const [translateWords, setTranslateWords] = useState({});
     const [showButton, setShowButton] = useState(false);
     const [selectedWords, setSelectedWords] = useState({});
-    const [clickOption, setClickOption] = useState(null);
-    console.log(clickOption)
+    const [clickOption, setClickOption] = useState({});
+
     useEffect(() => {
         const handleScroll = () => {
             if (window.scrollY > 100) {
@@ -27,9 +27,7 @@ const Dictionary = () => {
 
     useEffect(() => {
         const learnedWords = JSON.parse(localStorage.getItem('learnedWords') || '{}');
-
         const learnKeys = Object.keys(learnedWords);
-
         const filteredGroupedWords = Object.fromEntries(
             Object.entries(groupedWords).map(([key, value]) => {
                 return [key, value.filter(word => {
@@ -37,15 +35,18 @@ const Dictionary = () => {
                 })];
             })
         );
+        const updatedFilteredGroupedWords = Object.fromEntries(
+            Object.entries(filteredGroupedWords).filter(([key, value]) => value.length > 0)
+        );
 
-        setTranslateWords(filteredGroupedWords);
+        setTranslateWords(updatedFilteredGroupedWords);
 
         const storedSelectedWords = JSON.parse(localStorage.getItem('selectedWords') || '{}');
         setSelectedWords(storedSelectedWords);
     }, []);
 
-    const handleOption = (i) => {
-        setClickOption(i)
+    const handleOption = (items) => {
+        setClickOption(items)
     }
 
     const handleSetSelectedWords = (firstLetter, obj, event) => {
@@ -56,11 +57,9 @@ const Dictionary = () => {
         if (!selectedWordsStorage[firstLetter]) {
             selectedWordsStorage[firstLetter] = [];
         }
-
         if (!selectedWordsStorage[firstLetter].some(item => JSON.stringify(item) === JSON.stringify(obj))) {
             selectedWordsStorage[firstLetter].push(obj);
         }
-
         localStorage.setItem('selectedWords', JSON.stringify(selectedWordsStorage))
         setSelectedWords(selectedWordsStorage);
     };
@@ -73,7 +72,6 @@ const Dictionary = () => {
         if (!learnedWordsStorage[firstLetter]) {
             learnedWordsStorage[firstLetter] = [];
         }
-
         if (!learnedWordsStorage[firstLetter].some(item => JSON.stringify(item) === JSON.stringify(obj))) {
             learnedWordsStorage[firstLetter].push(obj);
             localStorage.setItem('learnedWords', JSON.stringify(learnedWordsStorage));
@@ -83,6 +81,10 @@ const Dictionary = () => {
                     ...prevTranslateWords,
                     [firstLetter]: prevTranslateWords[firstLetter].filter(word => JSON.stringify(word) !== JSON.stringify(obj))
                 };
+                if (updatedTranslateWords[firstLetter].length === 0) {
+                    delete updatedTranslateWords[firstLetter];
+                }
+
                 return updatedTranslateWords;
             });
         }
@@ -91,6 +93,9 @@ const Dictionary = () => {
     return (
         <ContainerStyle $showButton={showButton}>
             <a href="#start">На початок</a>
+            {Object.keys(translateWords).length > 0 &&
+                <span>Кількість: <span>{Object.values(translateWords).reduce((acc, words) => { acc += words.length; return acc }, 0)}</span></span>
+            }
             {Object.keys(translateWords).map((firsLetter, index) => (
                 <div key={`${firsLetter} + ${index}`}>
                     <span id='start'></span>
@@ -99,11 +104,11 @@ const Dictionary = () => {
                         {translateWords[firsLetter].map((items, i) => (
                             <li
                                 key={`${items} + ${i}`}
-                                onClick={() => handleOption(i)}
+                                onClick={() => handleOption(items)}
                                 className={selectedWords[firsLetter] && selectedWords[firsLetter].some(item => JSON.stringify(item) === JSON.stringify(items)) ? 'selected-item' : ''}
                             >
                                 <span>{Object.keys(items)}</span><span> : </span><span>{Object.values(items)}</span>
-                                {clickOption === i &&
+                                {clickOption === items &&
                                     <div>
                                         Додати до:
                                         <button onClick={(e) => handleSetSelectedWords(firsLetter, items, e)}>вибрані</button>
@@ -115,7 +120,7 @@ const Dictionary = () => {
                     </BlockWordsStyle>
                 </div>
             ))}
-            < NavigationBarWords />
+            < NavigationBarWords translateWords={translateWords} />
         </ContainerStyle>
     )
 };

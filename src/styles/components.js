@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const ContainerStyle = styled.div`
   color: ${props => props.theme.text};
+  position: relative;
 
   >a {
     display: ${props => props.$showButton ? 'block' : 'none'};
@@ -22,6 +23,16 @@ export const ContainerStyle = styled.div`
     &:hover {
      color: white;
      border-top: none;
+    }
+  }
+
+  >span {
+    position: absolute;
+    right: 20px;
+    color: ${props => props.theme.primary};
+
+    >span {
+      color: ${props => props.theme.text};
     }
   }
   
@@ -62,6 +73,7 @@ export const BlockWordsStyle = styled.ol`
 
     span:first-child {
       color: ${props => props.theme.primary};
+      margin-left: 2px;
     }
 
     span:nth-child(2) {
@@ -122,4 +134,17 @@ export const BlockWordsStyle = styled.ol`
       color: ${props => props.theme.inactiveTextThird};
     }
   }
+`;
+
+export const MessageStyle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #FF9D00;
+  border-radius: 20px;
+  margin: 40px 10px;
+  height: 20vh;
+  background-color: ${props => props.theme.background};
+  box-shadow: 2px 2px 8px 1px #000;
+  user-select: none;
 `;

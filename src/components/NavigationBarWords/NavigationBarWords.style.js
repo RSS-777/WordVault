@@ -3,13 +3,15 @@ import styled from "styled-components";
 export const NavStyle = styled.nav`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   position: fixed;
   left: ${props => props.$open ? '0' : '-25px'};
   top: 50%;
   transform: translateY(-50%);
   width: 20px;
-  padding: 5px 0;
+  min-height: 140px;
+  padding: 5px 0 3px;
   border: 2px solid red;
   border-radius: 0 10px 10px 0;
   background-color: ${props => props.theme.backgroundWords};
@@ -18,9 +20,7 @@ export const NavStyle = styled.nav`
 
   span {
     position: absolute;
-    top: 50%;
     left:-15px;
-    transform: translateY(-50%);
     transform: rotateZ(-90deg);
     color: red;
     background-color: #38454C;

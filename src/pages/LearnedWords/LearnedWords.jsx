@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { ContainerStyle, BlockWordsStyle } from '../../styles/components';
+import { ContainerStyle, BlockWordsStyle, MessageStyle } from '../../styles/components';
 import { NavigationBarWords } from "../../components/NavigationBarWords/NavigationBarWords";
 
 const LearnedWords = () => {
     const [lernedWords, setLernedWords] = useState({});
     const [showButton, setShowButton] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -25,6 +26,7 @@ const LearnedWords = () => {
     useEffect(() => {
         let getLearnedWords = JSON.parse(localStorage.getItem('learnedWords') || '{}');
         setLernedWords(getLearnedWords)
+        setLoading(true)
     }, [])
 
     const handleDeleteWords = (firstLetter, obj) => {
@@ -42,24 +44,30 @@ const LearnedWords = () => {
         setLernedWords(getLearnedWords)
     };
 
+    const sortLearnedWords = Object.fromEntries(Object.entries(lernedWords).sort());
+
     return (
         <ContainerStyle $showButton={showButton}>
             <a href="#start">На початок</a>
-            {Object.keys(lernedWords).map((firsLetter, index) => (
+            {Object.keys(sortLearnedWords).length > 0 &&
+                <span>Кількість: <span>{Object.values(sortLearnedWords).reduce((acc, words) => { acc += words.length; return acc }, 0)}</span></span>
+            }
+            {Object.keys(sortLearnedWords).map((firsLetter, index) => (
                 <div key={`${firsLetter} + ${index}`}>
                     <span id='start'></span>
                     <h4 id={firsLetter}>{firsLetter}</h4>
                     <BlockWordsStyle>
-                        {lernedWords[firsLetter].map((items, index) => (
+                        {sortLearnedWords[firsLetter].map((items, index) => (
                             <li
                                 key={`${items} + ${index}`}
                                 onClick={() => handleDeleteWords(firsLetter, items)}
-                            ><span>{Object.keys(items)}</span>: <span>{Object.values(items)}</span></li>
+                            ><span>{Object.keys(items)}</span><span>:</span><span>{Object.values(items)}</span></li>
                         ))}
                     </BlockWordsStyle>
                 </div>
             ))}
-            < NavigationBarWords />
+            < NavigationBarWords translateWords={sortLearnedWords} />
+            {loading && Object.keys(sortLearnedWords).length === 0 && <MessageStyle>Поки ви не добавили жодного слова!</MessageStyle>}
         </ContainerStyle>
     )
 }

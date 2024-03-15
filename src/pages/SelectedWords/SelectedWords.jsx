@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
-import { ContainerStyle, BlockWordsStyle } from '../../styles/components';
+import { ContainerStyle, BlockWordsStyle, MessageStyle } from '../../styles/components';
 import { NavigationBarWords } from "../../components/NavigationBarWords/NavigationBarWords";
 
 const SelectedWords = () => {
     const [selectedWords, setSelectedWords] = useState({});
     const [showButton, setShowButton] = useState(false);
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -25,6 +26,7 @@ const SelectedWords = () => {
     useEffect(() => {
         let getSelectedWords = JSON.parse(localStorage.getItem('selectedWords') || '{}');
         setSelectedWords(getSelectedWords)
+        setLoading(true)
     }, [])
 
     const handleSetLocalStorage = (firstLetter, obj) => {
@@ -56,24 +58,30 @@ const SelectedWords = () => {
         setSelectedWords(getSelectedWords)
     };
 
+    const sortSelectedWords = Object.fromEntries(Object.entries(selectedWords).sort());
+
     return (
         <ContainerStyle $showButton={showButton}>
             <a href="#start">На початок</a>
-            {Object.keys(selectedWords).map((firsLetter, index) => (
+            {Object.keys(sortSelectedWords).length > 0 &&
+                <span>Кількість: <span>{Object.values(sortSelectedWords).reduce((acc, words) => { acc += words.length; return acc }, 0)}</span></span>
+            }
+            {Object.keys(sortSelectedWords).map((firsLetter, index) => (
                 <div key={`${firsLetter} + ${index}`}>
                     <span id='start'></span>
                     <h4 id={firsLetter}>{firsLetter}</h4>
                     <BlockWordsStyle>
-                        {selectedWords[firsLetter].map((items, index) => (
+                        {sortSelectedWords[firsLetter].map((items, index) => (
                             <li
                                 key={`${items} + ${index}`}
                                 onClick={() => handleSetLocalStorage(firsLetter, items)}
-                            ><span>{Object.keys(items)}</span>: <span>{Object.values(items)}</span></li>
+                            ><span>{Object.keys(items)}</span><span>:</span><span>{Object.values(items)}</span></li>
                         ))}
                     </BlockWordsStyle>
                 </div>
             ))}
-            < NavigationBarWords />
+            < NavigationBarWords translateWords={sortSelectedWords} />
+            {loading && Object.keys(sortSelectedWords).length === 0 && <MessageStyle>Поки ви не добавили жодного слова!</MessageStyle>}
         </ContainerStyle>
     )
 }

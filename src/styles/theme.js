@@ -20,8 +20,8 @@ export const darkTheme = {
   background: '#333',
   backgroundButton: 'gray',
   boxShadowButton: '1px 1px 4px 0 white;',
-  inactiveBackground: '#E3E3E3',
-  inactiveTextPrimary: '#FFF9C7',
-  inactiveTextSecondary: '#FFF9C7',
+  inactiveBackground: '#DBDBDB',
+  inactiveTextPrimary: '#FFF6AE',
+  inactiveTextSecondary: '#FFF6AE',
   inactiveTextThird: 'white',
 };
