@@ -28,7 +28,7 @@ export const ContainerStyle = styled.div`
 
   >span {
     position: absolute;
-    right: 20px;
+    right: 25px;
     color: ${props => props.theme.primary};
 
     >span {
@@ -37,7 +37,6 @@ export const ContainerStyle = styled.div`
   }
   
   div {
-    
     h4 {
       color: ${props => props.theme.primary};
       margin: 5px auto 5px 50px;
@@ -45,7 +44,7 @@ export const ContainerStyle = styled.div`
 
     >span {
       position: absolute;
-      top: 0;
+      top: -85px;
     }
   } 
 `;
@@ -147,4 +146,20 @@ export const MessageStyle = styled.div`
   background-color: ${props => props.theme.background};
   box-shadow: 2px 2px 8px 1px #000;
   user-select: none;
+`;
+
+export const ContainerFooterPagesStyle = styled.div`
+  border: 2px solid #FF9D00;
+  border-radius: 20px;
+  margin:20px;
+  padding: 20px;
+  background-color: ${props => props.theme.background};
+  box-shadow: 2px 2px 8px 1px #000;
+  user-select: none;
+  color: ${props => props.theme.text};
+
+  h2 {
+    text-align: center;
+    color: ${props => props.theme.primary};
+  }
 `;

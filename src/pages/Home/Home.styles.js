@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const ContainerHomeStyle = styled.div`
   border: 2px solid #FF9D00;
   border-radius: 20px;
-  margin: 40px 10px;
+  margin: 35px 10px 20px;
   padding: 20px;
   background-color: ${props => props.theme.background};
   box-shadow: 2px 2px 8px 1px #000;
