@@ -12,7 +12,7 @@ export const DivStyle = styled.div`
             color: ${props => props.theme.primary};
 
             >span {
-                color: ${props => props.theme.secondary}; 
+                color: tomato; 
                 user-select: text;
             }
         }
