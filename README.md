@@ -17,6 +17,7 @@ This functionality allows users to effectively organize the process of learning 
 * [X] **EmailJS**: This is a service that allows you to send emails directly from the frontend of your web application, without having to set up your own mail server. It offers a simple API to send emails from anywhere in your client application.
 * [X] **React Hook Form**:  Is a library for managing forms in React using hooks. It provides a simple and convenient way to create, validate and track the state of forms without using complex class components.
 * [X] **Styled Components**:  Is a library for React and React Native that allows you to write CSS as JavaScript. It allows you to create reactive, mutable component styles that allow you to easily control the appearance of your application based on the state of the components.
+* [X] **ENV**: Is  a way to pass sensitive or variable data to your application through an external configuration file or operating system environment variables.
 ___
 [Link to the site with the *WordVault*](https://rss-777.github.io/WordVault/)
 
